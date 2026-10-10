@@ -220,8 +220,7 @@ Just the paragraph."""
 
 if __name__ == "__main__":
     if not GROQ_API_KEY:
-        print("⚠️  WARNING: GROQ_API_KEY not found!")
+        print("⚠️  WARNING: GROQ_API_KEY not found in .env file!")
     else:
         print("✅ GROQ_API_KEY loaded successfully.")
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=False)
+    app.run(debug=False, port=5001)   # <-- changed from 5000 to 5001

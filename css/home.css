@@ -1,0 +1,240 @@
+.home-page {
+  width: 86%;
+  max-width: 1200px;
+  min-height: 680px;
+  margin: 0 auto;
+  padding: 72px 0;
+  display: none;
+  grid-template-columns: 1fr 0.9fr;
+  align-items: center;
+  gap: 55px;
+}
+
+.home-page.active {
+  display: grid;
+}
+
+.home-content h1 {
+  margin: 16px 0;
+  font-size: clamp(36px, 4.4vw, 55px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+}
+
+.home-description {
+  max-width: 520px;
+  margin-bottom: 28px;
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.home-benefits {
+  display: grid;
+  gap: 12px;
+  margin-top: 34px;
+}
+
+.home-benefits > div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  color: #42564a;
+  font-size: 13px;
+}
+
+.benefit-icon {
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: var(--green-light);
+  color: var(--green);
+  font-size: 17px;
+}
+
+.home-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.home-image {
+  position: relative;
+  min-width: 0;
+}
+
+.home-image img {
+  display: block;
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 28px;
+  transition: opacity 0.35s ease;
+}
+
+.image-caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 14px 17px;
+  border-radius: 13px;
+  color: white;
+  background: rgba(20, 35, 26, 0.78);
+  backdrop-filter: blur(8px);
+  font-size: 13px;
+}
+
+.caption-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #82e0a7;
+}
+
+.cars-section {
+  padding: 18px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.cars-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cars-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: var(--ink);
+}
+
+.cars-count {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-light);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.cars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+/* Car card – clean, no pencil, no badge */
+.car-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 14px;
+  background: #fafcf9;
+  text-align: left;
+  transition: 0.15s ease;
+}
+
+.car-card:hover {
+  border-color: var(--car-color, var(--green));
+  transform: translateY(-1px);
+  background: white;
+}
+
+.car-card.active {
+  border-color: var(--car-color, var(--green));
+  background: white;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.car-avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: white;
+  font-size: 20px;
+}
+
+.car-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.car-info strong {
+  font-size: 13px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.car-info small {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.btn-add-car {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 20px;
+  border: 2px dashed var(--green);
+  border-radius: 14px;
+  background: transparent;
+  color: var(--green);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  transition: 0.15s ease;
+}
+
+.btn-add-car:hover {
+  background: var(--green-light);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 800px) {
+  .home-page,
+  .home-page.active {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding: 46px 0;
+  }
+
+  .home-content h1 {
+    font-size: 40px;
+  }
+
+  .home-image img {
+    height: 240px;
+  }
+
+  .home-actions {
+    flex-direction: column;
+  }
+}

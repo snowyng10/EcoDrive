@@ -1,0 +1,41 @@
+.form-card {
+  padding: 30px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.field > span {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 13px;
+  border: 1px solid #dbe3dc;
+  border-radius: 10px;
+  color: var(--ink);
+  background: white;
+}
+
+.field small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+@media (max-width: 650px) {
+  .form-card {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EcoDrive AI | Your Fuel Detective</title>
+
+  <link rel="stylesheet" href="css/common.css" />
+  <link rel="stylesheet" href="css/home.css" />
+  <link rel="stylesheet" href="css/fuel-input.css" />
+  <link rel="stylesheet" href="css/investigation.css" />
+  <link rel="stylesheet" href="css/habits.css" />
+  <link rel="stylesheet" href="css/modal.css" />
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="#" class="brand" onclick="showPage('home'); return false;">
+      <span class="brand-icon">E</span>
+      <span>EcoDrive <span class="brand-ai">AI</span></span>
+    </a>
+    <span class="header-label">Your AI Fuel Detective</span>
+  </header>
+
+  <main>
+    <!-- PAGE 1: HOME -->
+    <section id="home" class="page active home-page">
+      <div class="home-content">
+        <span class="eyebrow">DRIVE SMARTER. SAVE MORE.</span>
+        <h1>Your petrol bill is rising.<br />Let's find out why.</h1>
+        <p class="home-description">
+          EcoDrive AI helps you investigate unusual fuel consumption,
+          understand what might be causing it, and discover practical ways
+          to save money on every journey.
+        </p>
+
+        <div class="home-actions">
+          <button class="btn btn-primary" onclick="showPage('fuel-input')">
+            Log Fuel Usage <span>→</span>
+          </button>
+          <button class="btn btn-secondary" onclick="showPage('habits')">
+            Edit Driving Habits
+          </button>
+        </div>
+
+        <div class="home-benefits">
+          <div>
+            <span class="benefit-icon">⌁</span>
+            <span>Spot unusual changes</span>
+          </div>
+          <div>
+            <span class="benefit-icon">◎</span>
+            <span>Investigate possible causes</span>
+          </div>
+          <div>
+            <span class="benefit-icon">↗️</span>
+            <span>Find ways to save</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-image-wrapper">
+        <div class="home-image">
+          <img id="home-car-image"
+            src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=1400&q=85"
+            alt="Car display" />
+          <div class="image-caption">
+            <span class="caption-dot"></span>
+            <span id="home-car-caption">Every litre tells a story.</span>
+          </div>
+        </div>
+
+        <div class="cars-section">
+          <div class="cars-header">
+            <span class="cars-title">Your Registered Cars</span>
+            <span id="cars-count" class="cars-count">1 car</span>
+          </div>
+          <div id="cars-list" class="cars-list"></div>
+        </div>
+
+        <button class="btn-add-car" onclick="openAddCarModal()">
+          + Add New Car
+        </button>
+      </div>
+    </section>
+
+    <!-- PAGE 2: FUEL INPUT -->
+    <section id="fuel-input" class="page content-page">
+      <button class="back-link" onclick="showPage('home')">← Back home</button>
+
+      <div class="page-heading">
+        <span class="eyebrow">STEP 01 · YOUR JOURNEY</span>
+        <h1>Let's look at your fuel usage.</h1>
+        <p>Enter your latest journey details for <strong id="active-car-name">Primary Car</strong>.</p>
+      </div>
+
+      <form id="fuel-form" class="form-card">
+        <div class="form-grid">
+          <label class="field">
+            <span>Estimated distance travelled (km)</span>
+            <input id="distance" type="number" min="1" step="any"
+              placeholder="e.g. 120" required />
+            <small>A rough estimate is fine — you don't need the exact number.</small>
+          </label>
+
+          <label class="field">
+            <span>Fuel used (litres)</span>
+            <input id="litres" type="number" min="0.1" step="any"
+              placeholder="e.g. 12" required />
+          </label>
+
+          <label class="field">
+            <span>Fuel type</span>
+            <select id="fuel-type" required>
+              <option value="ron95" selected>RON 95</option>
+              <option value="ron97">RON 97</option>
+              <option value="diesel">Diesel</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Fuel price (RM per litre)</span>
+            <input id="fuel-price" type="number" min="0.01" step="0.01"
+              placeholder="e.g. 2.05" value="2.05" required />
+            <small id="fuel-price-hint">Market price for RON 95</small>
+          </label>
+
+          <label class="field field-full subsidy-field">
+            <span class="subsidy-checkbox-row">
+              <input id="citizen" type="checkbox" />
+              <span>
+                <strong>I am a Malaysian citizen</strong>
+                <small>Only Malaysian citizens are eligible for the fuel subsidy programme.</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="field field-full subsidy-field">
+            <span class="subsidy-checkbox-row" id="subsidy-row">
+              <input id="subsidy" type="checkbox" disabled />
+              <span>
+                <strong>Eligible for fuel subsidy</strong>
+                <small id="subsidy-hint">Tick "Malaysian citizen" above to unlock this.</small>
+              </span>
+            </span>
+          </label>
+
+          <label class="field field-full">
+            <span>What were the driving conditions like?</span>
+            <select id="condition">
+              <option value="traffic">Heavy traffic / frequent stopping</option>
+              <option value="normal">Normal traffic</option>
+              <option value="highway">Mostly highway driving</option>
+              <option value="short">Many short trips</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-note">
+          <span>ⓘ</span>
+          <p>
+            EcoDrive learns your usual consumption from your previous entries.
+            The more you log, the smarter your suggestions become.
+          </p>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            Analyse Fuel Usage →
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- PAGE 3: AI INVESTIGATION -->
+    <section id="investigation" class="page content-page">
+      <button class="back-link" onclick="showPage('fuel-input')">
+        ← Back to fuel details
+      </button>
+
+      <div class="page-heading">
+        <span class="eyebrow">STEP 02 · AI FUEL DETECTIVE</span>
+        <h1 id="investigation-title">Here's what we found.</h1>
+        <p id="investigation-subtitle">Based on your logged data.</p>
+      </div>
+
+      <div class="metric-grid">
+        <article class="metric-card">
+          <span>Latest consumption</span>
+          <strong id="latest-metric">0.0</strong>
+          <small>L/100 km</small>
+        </article>
+
+        <article class="metric-card">
+          <span>Your recent average</span>
+          <strong id="baseline-metric">0.0</strong>
+          <small>L/100 km</small>
+        </article>
+
+        <article class="metric-card">
+          <span>Estimated extra fuel cost</span>
+          <strong id="extra-cost">RM 0.00</strong>
+          <small>For this journey</small>
+        </article>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-heading">
+          <div>
+            <h2>Fuel consumption history</h2>
+            <p>Lower consumption generally means better fuel efficiency.</p>
+          </div>
+          <span class="chart-unit">L / 100 km</span>
+        </div>
+        <div id="fuel-chart" class="chart-area"></div>
+        <div class="chart-legend">
+          <span><i class="legend-dot legend-usual"></i>Your average</span>
+          <span><i class="legend-dot legend-latest"></i>Latest journey</span>
+        </div>
+      </div>
+
+      <div id="anomaly-message" class="anomaly-card"></div>
+
+      <!-- Normal fuel use / first log: only a friendly message -->
+      <div id="normal-message" class="normal-message" style="display:none;">
+        <div class="normal-check">✓</div>
+        <div>
+          <h3 id="normal-title">Your fuel use looks normal</h3>
+          <p id="normal-text">No action needed right now. Keep logging journeys to spot any future changes.</p>
+        </div>
+      </div>
+
+      <!-- Analysis block (hidden for first log & normal fuel use) -->
+      <div id="analysis-block" style="display:none;">
+        <div id="investigation-summary" class="investigation-summary"></div>
+
+        <h2 class="section-heading">Predicted Causes</h2>
+        <div id="cause-list" class="cause-list"></div>
+
+        <h2 class="section-heading">Suggested actions & financial impact</h2>
+        <p class="section-description">
+          Choose any action below to see how much you could save.
+        </p>
+
+        <div id="action-panel" class="action-panel"></div>
+
+        <p class="disclaimer">
+          These are possible explanations, not confirmed diagnoses.
+          Fuel consumption can also vary with weather, vehicle condition,
+          load, route, and measurement accuracy.
+        </p>
+      </div>
+
+      <div class="final-actions">
+        <button class="btn btn-primary" onclick="startNewJourney()">
+          Log another journey →
+        </button>
+        <button class="btn btn-secondary" onclick="showPage('home')">
+          🏠 Back to Home
+        </button>
+      </div>
+    </section>
+
+    <!-- PAGE 4: DRIVING HABITS -->
+    <section id="habits" class="page content-page">
+      <button class="back-link" onclick="showPage('home')">← Back home</button>
+
+      <div class="page-heading">
+        <span class="eyebrow">PERSONALISE YOUR EXPERIENCE</span>
+        <h1>Tell us about your driving habits.</h1>
+        <p>Habits for <strong id="habits-car-name">Primary Car</strong>. Each car has its own profile.</p>
+      </div>
+
+      <form id="habits-form" class="form-card">
+        <label class="field">
+          <span>What do you mainly use this car for?</span>
+          <select id="purpose">
+            <option value="commuting">Daily commute to work or university</option>
+            <option value="personal">Personal errands</option>
+            <option value="e-hailing">E-hailing / ride-hailing</option>
+            <option value="mixed">A mix of different journeys</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>What type of trips do you usually make?</span>
+          <select id="trip-type">
+            <option value="city">Mostly city driving</option>
+            <option value="highway">Mostly highway driving</option>
+            <option value="mixed">A mix of city and highway</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>How often do you encounter heavy traffic?</span>
+          <select id="traffic-frequency">
+            <option value="often">Often</option>
+            <option value="sometimes">Sometimes</option>
+            <option value="rarely">Rarely</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>How would you describe your driving style?</span>
+          <select id="driving-style">
+            <option value="smooth">Generally smooth</option>
+            <option value="mixed">A mix of smooth and rapid driving</option>
+            <option value="rapid">Often accelerate or brake rapidly</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span>How often do you leave your engine idling?</span>
+          <select id="idling">
+            <option value="low">Rarely</option>
+            <option value="medium">Sometimes</option>
+            <option value="high">Frequently</option>
+          </select>
+        </label>
+
+        <div class="final-actions">
+          <button type="submit" class="btn btn-primary">
+            Save habits →
+          </button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>EcoDrive AI</span>
+    <span>Understand your fuel. Make smarter journeys.</span>
+  </footer>
+
+  <!-- ADD CAR MODAL -->
+  <div id="car-modal" class="modal-overlay" onclick="closeAddCarModal(event)">
+    <div class="modal-card" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">NEW VEHICLE</span>
+          <h2>Add a new car</h2>
+        </div>
+        <button class="modal-close" onclick="closeAddCarModal(event)">✕</button>
+      </div>
+
+      <form id="add-car-form" class="modal-body">
+        <label class="field">
+          <span>Nickname for this car</span>
+          <input id="new-car-name" type="text" placeholder="e.g. My Honda Civic" required />
+        </label>
+
+        <div class="form-grid">
+          <label class="field">
+            <span>Brand</span>
+            <select id="new-car-brand" required>
+              <option value="" disabled selected>Select brand…</option>
+              <optgroup label="Popular">
+                <option value="Toyota">Toyota</option>
+                <option value="Honda">Honda</option>
+                <option value="Nissan">Nissan</option>
+                <option value="Mazda">Mazda</option>
+                <option value="Mitsubishi">Mitsubishi</option>
+                <option value="Subaru">Subaru</option>
+                <option value="Suzuki">Suzuki</option>
+                <option value="Isuzu">Isuzu</option>
+                <option value="Perodua">Perodua</option>
+                <option value="Proton">Proton</option>
+                <option value="Hyundai">Hyundai</option>
+                <option value="Kia">Kia</option>
+              </optgroup>
+              <optgroup label="European">
+                <option value="BMW">BMW</option>
+                <option value="Mercedes-Benz">Mercedes-Benz</option>
+                <option value="Audi">Audi</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Porsche">Porsche</option>
+                <option value="Ferrari">Ferrari</option>
+                <option value="Lamborghini">Lamborghini</option>
+                <option value="Maserati">Maserati</option>
+                <option value="Bentley">Bentley</option>
+                <option value="Rolls-Royce">Rolls-Royce</option>
+                <option value="Jaguar">Jaguar</option>
+                <option value="Land Rover">Land Rover</option>
+                <option value="Volvo">Volvo</option>
+                <option value="Peugeot">Peugeot</option>
+                <option value="Renault">Renault</option>
+                <option value="Mini">Mini</option>
+                <option value="Fiat">Fiat</option>
+                <option value="Alfa Romeo">Alfa Romeo</option>
+                <option value="Skoda">Skoda</option>
+                <option value="Seat">Seat</option>
+              </optgroup>
+              <optgroup label="American">
+                <option value="Ford">Ford</option>
+                <option value="Chevrolet">Chevrolet</option>
+                <option value="Tesla">Tesla</option>
+                <option value="Jeep">Jeep</option>
+                <option value="Dodge">Dodge</option>
+                <option value="Cadillac">Cadillac</option>
+                <option value="Lincoln">Lincoln</option>
+              </optgroup>
+              <optgroup label="Korean &amp; Other">
+                <option value="Genesis">Genesis</option>
+                <option value="SsangYong">SsangYong</option>
+                <option value="Chery">Chery</option>
+                <option value="BYD">BYD</option>
+                <option value="MG">MG</option>
+                <option value="Other">Other</option>
+              </optgroup>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Model</span>
+            <input id="new-car-model" type="text" placeholder="e.g. Vios" required />
+          </label>
+
+          <label class="field">
+            <span>Car type</span>
+            <select id="new-car-type" required>
+              <option value="sedan">Sedan</option>
+              <option value="suv">SUV</option>
+              <option value="mpv">MPV</option>
+              <option value="hatchback">Hatchback</option>
+              <option value="pickup">Pickup Truck</option>
+              <option value="coupe">Coupe</option>
+              <option value="van">Van</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Engine capacity (cc)</span>
+            <select id="new-car-engine" required>
+              <option value="" disabled selected>Select engine size…</option>
+              <option value="660">660 cc (Kei car)</option>
+              <option value="1000">1000 cc (1.0L)</option>
+              <option value="1200">1200 cc (1.2L)</option>
+              <option value="1300">1300 cc (1.3L)</option>
+              <option value="1500">1500 cc (1.5L)</option>
+              <option value="1600">1600 cc (1.6L)</option>
+              <option value="1800">1800 cc (1.8L)</option>
+              <option value="2000">2000 cc (2.0L)</option>
+              <option value="2200">2200 cc (2.2L)</option>
+              <option value="2400">2400 cc (2.4L)</option>
+              <option value="2500">2500 cc (2.5L)</option>
+              <option value="3000">3000 cc (3.0L)</option>
+              <option value="3500">3500 cc (3.5L)</option>
+              <option value="4000">4000 cc (4.0L)</option>
+              <option value="4500">4500 cc (4.5L)</option>
+              <option value="5000">5000 cc (5.0L)</option>
+              <option value="6000">6000 cc (6.0L)</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Year</span>
+            <input id="new-car-year" type="number" min="1980" max="2030"
+              placeholder="e.g. 2020" required />
+          </label>
+
+          <label class="field">
+            <span>Car condition</span>
+            <select id="new-car-condition" required>
+              <option value="excellent">Excellent</option>
+              <option value="good" selected>Good</option>
+              <option value="fair">Fair</option>
+              <option value="poor">Poor / needs service</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeAddCarModal(event)">
+            Cancel
+          </button>
+          <button type="submit" class="btn btn-primary">
+            Add Car →
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

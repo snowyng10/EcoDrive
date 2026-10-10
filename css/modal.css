@@ -1,0 +1,133 @@
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 25, 20, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-overlay.open {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 22px;
+  padding: 28px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+  animation: slideUp 0.25s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.modal-header h2 {
+  margin: 6px 0 0;
+  font-size: 24px;
+  letter-spacing: -0.6px;
+}
+
+.modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: white;
+  color: var(--muted);
+  font-size: 15px;
+  display: grid;
+  place-items: center;
+  transition: 0.15s ease;
+}
+
+.modal-close:hover {
+  background: #fbeaea;
+  color: #b54747;
+  border-color: #f0c9c9;
+}
+
+.modal-body .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 14px;
+  margin-top: 4px;
+}
+
+.modal-body .field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.modal-body .field > span {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.modal-body .field input,
+.modal-body .field select {
+  width: 100%;
+  min-height: 46px;
+  padding: 11px 13px;
+  border: 1px solid #dbe3dc;
+  border-radius: 10px;
+  background: white;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.modal-body .field input:focus,
+.modal-body .field select:focus {
+  outline: 3px solid rgba(22, 115, 74, 0.15);
+  border-color: var(--green);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+@media (max-width: 600px) {
+  .modal-card {
+    padding: 20px;
+    border-radius: 18px;
+  }
+  .modal-body .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+  .modal-actions .btn {
+    width: 100%;
+  }
+}

@@ -1,8 +1,8 @@
-flask
-groq
-python-dotenv
-pandas
-numpy
-scikit-learn
-joblib
-gunicorn
+Flask==3.0.0
+groq==0.11.0
+python-dotenv==1.0.1
+gunicorn==21.2.0
+joblib==1.4.2
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.0

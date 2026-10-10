@@ -1,7 +1,11 @@
 
 from flask import Flask, render_template, request, jsonify
 
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="statics/css/js/image",
+    static_url_path="/static"
+)
 
 
 def calculate_fuel_efficiency(distance_km, litres_used):

@@ -44,18 +44,9 @@
         </div>
 
         <div class="home-benefits">
-          <div>
-            <span class="benefit-icon">⌁</span>
-            <span>Spot unusual changes</span>
-          </div>
-          <div>
-            <span class="benefit-icon">◎</span>
-            <span>Investigate possible causes</span>
-          </div>
-          <div>
-            <span class="benefit-icon">↗️</span>
-            <span>Find ways to save</span>
-          </div>
+          <div><span class="benefit-icon">⌁</span><span>Spot unusual changes</span></div>
+          <div><span class="benefit-icon">◎</span><span>Investigate possible causes</span></div>
+          <div><span class="benefit-icon">↗️</span><span>Find ways to save</span></div>
         </div>
       </div>
 
@@ -98,15 +89,13 @@
         <div class="form-grid">
           <label class="field">
             <span>Estimated distance travelled (km)</span>
-            <input id="distance" type="number" min="1" step="any"
-              placeholder="e.g. 120" required />
+            <input id="distance" type="number" min="1" step="any" placeholder="e.g. 120" required />
             <small>A rough estimate is fine — you don't need the exact number.</small>
           </label>
 
           <label class="field">
             <span>Fuel used (litres)</span>
-            <input id="litres" type="number" min="0.1" step="any"
-              placeholder="e.g. 12" required />
+            <input id="litres" type="number" min="0.1" step="any" placeholder="e.g. 12" required />
           </label>
 
           <label class="field">
@@ -115,14 +104,15 @@
               <option value="ron95" selected>RON 95</option>
               <option value="ron97">RON 97</option>
               <option value="diesel">Diesel</option>
+              <option value="dieselb7">Diesel B7</option>
             </select>
           </label>
 
           <label class="field">
             <span>Fuel price (RM per litre)</span>
             <input id="fuel-price" type="number" min="0.01" step="0.01"
-              placeholder="e.g. 2.05" value="2.05" required />
-            <small id="fuel-price-hint">Market price for RON 95</small>
+              placeholder="e.g. 4.67" value="4.67" required />
+            <small id="fuel-price-hint">Pump price for RON 95: RM 4.67/L</small>
           </label>
 
           <label class="field field-full subsidy-field">
@@ -136,7 +126,7 @@
           </label>
 
           <label class="field field-full subsidy-field">
-            <span class="subsidy-checkbox-row" id="subsidy-row">
+            <span class="subsidy-checkbox-row" id="subsidy-row" style="opacity:0.55;">
               <input id="subsidy" type="checkbox" disabled />
               <span>
                 <strong>Eligible for fuel subsidy</strong>
@@ -158,25 +148,19 @@
 
         <div class="form-note">
           <span>ⓘ</span>
-          <p>
-            EcoDrive learns your usual consumption from your previous entries.
-            The more you log, the smarter your suggestions become.
-          </p>
+          <p>EcoDrive learns your usual consumption from your previous entries.
+          The more you log, the smarter your suggestions become.</p>
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn btn-primary">
-            Analyse Fuel Usage →
-          </button>
+          <button type="submit" class="btn btn-primary">Analyse Fuel Usage →</button>
         </div>
       </form>
     </section>
 
     <!-- PAGE 3: AI INVESTIGATION -->
     <section id="investigation" class="page content-page">
-      <button class="back-link" onclick="showPage('fuel-input')">
-        ← Back to fuel details
-      </button>
+      <button class="back-link" onclick="showPage('fuel-input')">← Back to fuel details</button>
 
       <div class="page-heading">
         <span class="eyebrow">STEP 02 · AI FUEL DETECTIVE</span>
@@ -190,13 +174,11 @@
           <strong id="latest-metric">0.0</strong>
           <small>L/100 km</small>
         </article>
-
         <article class="metric-card">
           <span>Your recent average</span>
           <strong id="baseline-metric">0.0</strong>
           <small>L/100 km</small>
         </article>
-
         <article class="metric-card">
           <span>Estimated extra fuel cost</span>
           <strong id="extra-cost">RM 0.00</strong>
@@ -221,16 +203,28 @@
 
       <div id="anomaly-message" class="anomaly-card"></div>
 
-      <!-- Normal fuel use / first log: only a friendly message -->
+      <!-- AI COACH CARD -->
+      <div id="ai-coach-card" class="ai-coach-card" style="display:none;">
+        <div class="ai-coach-header">
+          <span class="ai-coach-icon">✨</span>
+          <div>
+            <h3>AI Coach says</h3>
+            <small>Personalised advice from EcoDrive AI</small>
+          </div>
+        </div>
+        <p id="ai-coach-text">Thinking…</p>
+      </div>
+
+      <!-- Normal / first-log friendly message -->
       <div id="normal-message" class="normal-message" style="display:none;">
         <div class="normal-check">✓</div>
         <div>
           <h3 id="normal-title">Your fuel use looks normal</h3>
-          <p id="normal-text">No action needed right now. Keep logging journeys to spot any future changes.</p>
+          <p id="normal-text">No action needed right now.</p>
         </div>
       </div>
 
-      <!-- Analysis block (hidden for first log & normal fuel use) -->
+      <!-- Full analysis block (only when abnormal) -->
       <div id="analysis-block" style="display:none;">
         <div id="investigation-summary" class="investigation-summary"></div>
 
@@ -238,9 +232,7 @@
         <div id="cause-list" class="cause-list"></div>
 
         <h2 class="section-heading">Suggested actions & financial impact</h2>
-        <p class="section-description">
-          Choose any action below to see how much you could save.
-        </p>
+        <p class="section-description">Choose any action below to see how much you could save.</p>
 
         <div id="action-panel" class="action-panel"></div>
 
@@ -252,12 +244,8 @@
       </div>
 
       <div class="final-actions">
-        <button class="btn btn-primary" onclick="startNewJourney()">
-          Log another journey →
-        </button>
-        <button class="btn btn-secondary" onclick="showPage('home')">
-          🏠 Back to Home
-        </button>
+        <button class="btn btn-primary" onclick="startNewJourney()">Log another journey →</button>
+        <button class="btn btn-secondary" onclick="showPage('home')">🏠 Back to Home</button>
       </div>
     </section>
 
@@ -319,9 +307,7 @@
         </label>
 
         <div class="final-actions">
-          <button type="submit" class="btn btn-primary">
-            Save habits →
-          </button>
+          <button type="submit" class="btn btn-primary">Save habits →</button>
         </div>
       </form>
     </section>
@@ -456,8 +442,7 @@
 
           <label class="field">
             <span>Year</span>
-            <input id="new-car-year" type="number" min="1980" max="2030"
-              placeholder="e.g. 2020" required />
+            <input id="new-car-year" type="number" min="1980" max="2030" placeholder="e.g. 2020" required />
           </label>
 
           <label class="field">
@@ -472,12 +457,8 @@
         </div>
 
         <div class="modal-actions">
-          <button type="button" class="btn btn-secondary" onclick="closeAddCarModal(event)">
-            Cancel
-          </button>
-          <button type="submit" class="btn btn-primary">
-            Add Car →
-          </button>
+          <button type="button" class="btn btn-secondary" onclick="closeAddCarModal(event)">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Car →</button>
         </div>
       </form>
     </div>

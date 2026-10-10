@@ -1,3 +1,8 @@
 flask
 groq
 python-dotenv
+pandas
+numpy
+scikit-learn
+joblib
+gunicorn
